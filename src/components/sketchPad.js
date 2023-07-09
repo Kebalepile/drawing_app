@@ -4,7 +4,9 @@ function SketchPad(container, size = 310) {
   this.canvas.height = size;
   this.canvas.style = `
     background-color:white;
-    box-shadow: 0px 0px 10px 2px black;`;
+    box-shadow: 0px 0px 10px 2px black;
+    border-radius:4px;`;
+   
   container.appendChild(this.canvas);
   const lineBreak = document.createElement("br");
   container.appendChild(lineBreak);
@@ -64,4 +66,9 @@ SketchPad.prototype.getMouse = function (evt) {
 SketchPad.prototype.redraw = function () {
   this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
   draw.paths(this.ctx, this.paths);
+  if (this.paths.length) {
+    this.undoBtn.disabled = false;
+  } else {
+    this.undoBtn.disabled = true;
+  }
 };
