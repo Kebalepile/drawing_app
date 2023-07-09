@@ -1,4 +1,4 @@
-function SketchPad(container, size = 400) {
+function SketchPad(container, size = 310) {
   this.canvas = document.createElement("canvas");
   this.canvas.width = size;
   this.canvas.height = size;
@@ -6,6 +6,15 @@ function SketchPad(container, size = 400) {
     background-color:white;
     box-shadow: 0px 0px 10px 2px black;`;
   container.appendChild(this.canvas);
+  const lineBreak = document.createElement("br");
+  container.appendChild(lineBreak);
+  this.undoBtn = document.createElement("button");
+  this.undoBtn.textContent = "UNDO";
+  this.undoBtn.onclick = () => {
+    this.paths.pop();
+    this.redraw();
+  };
+  container.appendChild(this.undoBtn);
   this.ctx = this.canvas.getContext("2d");
   this.paths = [];
   this.isDrawing = false;
@@ -23,13 +32,24 @@ SketchPad.prototype.addEventListener = function () {
       const mouse = this.getMouse(evt);
       const lastPath = this.paths[this.paths.length - 1];
       lastPath.push(mouse);
-      //   this.paths.push(mouse);
-      //   console.log(this.path.length);
+
       this.redraw();
     }
   };
   this.canvas.onmouseup = () => {
     this.isDrawing = false;
+  };
+  this.canvas.ontouchstart = (evt) => {
+    const loc = evt.touches[0];
+    this.canvas.onmousedown(loc);
+  };
+  this.canvas.ontouchmove = (evt) => {
+    const loc = evt.touches[0];
+    this.canvas.onmousemove(loc);
+  };
+  this.canvas.ontouchend = (evt) => {
+    const loc = evt.touches[0];
+    this.canvas.onmouseup(loc);
   };
 };
 
