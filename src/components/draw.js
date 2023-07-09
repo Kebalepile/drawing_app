@@ -7,13 +7,12 @@ draw.path = (ctx, path, color = "black") => {
   for (let i = 1; i < path.length; i++) {
     ctx.lineTo(...path[i]);
   }
-  ctx.lineCap ="round";
+  ctx.lineCap = "round";
   ctx.lineJoin = "round";
   ctx.stroke();
 };
 draw.paths = (ctx, paths, color = "black") => {
   for (const path of paths) {
-    console.log(path);
     draw.path(ctx, path, color);
   }
 };
