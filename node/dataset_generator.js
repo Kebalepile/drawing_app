@@ -1,3 +1,6 @@
+import { draw } from "../common/draw.js";
+import { createCanvas } from "canvas";
+import fs from "fs";
 const constants = (() => {
   const DATA_DIR = "../data";
   const RAW_DIR = `${DATA_DIR}/raw`;
@@ -15,8 +18,19 @@ const constants = (() => {
     SAMPLES,
   };
 })();
+const canvas = createCanvas(400, 400);
+const ctx = canvas.getContext("2d");
 
-import fs from "fs";
+function generateImageFile(outputfile, paths) {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  draw.paths(ctx, paths);
+  const buffer = canvas.toBuffer("image/png");
+  fs.writeFileSync(outputfile, buffer, (err) => {
+    if (err) {
+      console.log(err.message);
+    }
+  });
+}
 const fileNames = fs.readdirSync(constants.RAW_DIR);
 const samples = [];
 let id = 1;
@@ -50,20 +64,3 @@ fs.writeFileSync(constants.SAMPLES, JSON.stringify(samples), (err) => {
     console.log(err.message);
   }
 });
-
-import { draw } from "../common/draw.js";
-import { createCanvas } from "canvas";
-
-const canvas = createCanvas(400, 400);
-const ctx = canvas.getContext("2d");
-
-function generateImageFile(outputfile, paths) {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  draw.paths(ctx, paths);
-  const buffer = canvas.toBuffer("image/png");
-  fs.writeFileSync(outputfile, buffer, (err) => {
-    if (err) {
-      console.log(err.message);
-    }
-  });
-}
