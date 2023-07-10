@@ -40,6 +40,7 @@ fileNames.forEach((fn) => {
         }
       }
     );
+
     generateImageFile(constants.IMG_DIR + "/" + id + ".png", paths);
     printPorgress(id, fileNames.length * 8);
     id++;
@@ -51,3 +52,10 @@ fs.writeFileSync(constants.SAMPLES, JSON.stringify(samples), (err) => {
     console.log(err.message);
   }
 });
+fs.writeFileSync(constants.SAMPLES_JS, `const samples=${JSON.stringify(samples)};`, (err) => {
+  if (err) {
+    console.log(err.message);
+  }
+});
+
+
