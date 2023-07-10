@@ -1,19 +1,28 @@
-const constants = {
-  DATA_DIR: "../data",
-  RAW_DIR: this.DATA_DIR + "/raw",
-  DATASET_DIR: this.DATA_DIR + "/dataset",
-  JSON_DIR: this.DATASET_DIR + "/json",
-  IMG_DIR: this.DATASET_DIR + "/img",
-  SAMPLES: this.DATASET_DIR + "/samples.json",
-};
+const constants = (() => {
+  const DATA_DIR = "../data";
+  const RAW_DIR = `${DATA_DIR}/raw`;
+  const DATASET_DIR = `${DATA_DIR}/dataset`;
+  const JSON_DIR = `${DATASET_DIR}/json`;
+  const IMG_DIR = `${DATASET_DIR}/img`;
+  const SAMPLES = `${DATASET_DIR}/samples.json`;
 
-const fs = require("fs");
+  return {
+    DATA_DIR,
+    RAW_DIR,
+    DATASET_DIR,
+    JSON_DIR,
+    IMG_DIR,
+    SAMPLES,
+  };
+})();
+
+import fs from "fs";
 const fileNames = fs.readdirSync(constants.RAW_DIR);
 const samples = [];
 let id = 1;
 fileNames.forEach((fn) => {
   const content = fs.readFileSync(constants.RAW_DIR + "/" + fn);
-  const { sessionStorage, student, drawings } = JSON.parse(content);
+  const { session, student, drawings } = JSON.parse(content);
   for (let label in drawings) {
     samples.push({
       id,
@@ -21,6 +30,17 @@ fileNames.forEach((fn) => {
       student_name: student,
       sessionId: session,
     });
+    const paths = drawings[label];
+    fs.writeFileSync(
+      constants.JSON_DIR + "/" + id + ".json",
+      JSON.stringify(paths, null, 4),
+      (err) => {
+        if (err) {
+          console.log(err.message);
+        }
+      }
+    );
+    generateImageFile(constants.IMG_DIR + "/" + id + ".png", paths);
     id++;
   }
 });
@@ -30,3 +50,20 @@ fs.writeFileSync(constants.SAMPLES, JSON.stringify(samples), (err) => {
     console.log(err.message);
   }
 });
+
+import { draw } from "../common/draw.js";
+import { createCanvas } from "canvas";
+
+const canvas = createCanvas(400, 400);
+const ctx = canvas.getContext("2d");
+
+function generateImageFile(outputfile, paths) {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  draw.paths(ctx, paths);
+  const buffer = canvas.toBuffer("image/png");
+  fs.writeFileSync(outputfile, buffer, (err) => {
+    if (err) {
+      console.log(err.message);
+    }
+  });
+}
