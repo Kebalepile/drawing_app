@@ -1,4 +1,4 @@
-const draw = {};
+export const draw = {};
 draw.path = (ctx, path, color = "black") => {
   ctx.strokeStyle = color;
   ctx.lineWidth = 3;

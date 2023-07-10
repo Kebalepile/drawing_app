@@ -1,4 +1,5 @@
-function SketchPad(container, size = 310) {
+import { draw } from "./draw.js";
+export function SketchPad(container, size = 310) {
   this.canvas = document.createElement("canvas");
   this.canvas.width = size;
   this.canvas.height = size;
@@ -6,8 +7,9 @@ function SketchPad(container, size = 310) {
     background-color:white;
     box-shadow: 0px 0px 10px 2px black;
     border-radius:4px;`;
-   
+
   container.appendChild(this.canvas);
+
   const lineBreak = document.createElement("br");
   container.appendChild(lineBreak);
   this.undoBtn = document.createElement("button");

@@ -5,20 +5,68 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Data Creator</title>
     <link rel="stylesheet" href="./styles.css" />
-    <script src="./components/draw.js"></script>
-    <script src="./components/sketchPad.js"></script>
-  
+    <!-- <script  src="./components/draw.js"></script>
+    <script src="./components/sketchPad.js"></script> -->
+    <script defer type="module">
+      import { SketchPad } from "./components/sketchPad.js";
+
+      const sketchPadContainer = document.querySelector("#sketchPadContainer");
+      const labels = [
+        "car",
+        "fish",
+        "house",
+        "tree",
+        "guiter",
+        "bicycle",
+        "pencil",
+        "clock",
+      ];
+      const data = {
+        student: null,
+        session: new Date().getTime(),
+        drawings: {},
+      };
+      const instructions = document.querySelector("#instructions");
+      instructions.textContent = `Please draw: ${labels.join(", ")}`;
+      const sketchPad = new SketchPad(sketchPadContainer);
+      const saveButton = document.querySelector("#save"),
+        label = document.querySelector("#label");
+      saveButton.onclick = (e) => {
+        if (sketchPad.paths && label.value.trim().toLowerCase()) {
+          (data.student = "james"),
+            (data.drawings[label.value.trim().toLowerCase()] = sketchPad.paths);
+          const downloadLink = document.createElement("a");
+          downloadLink.href =
+            "data:text/json;charset=utf-8," +
+            encodeURIComponent(JSON.stringify(data, null, 4));
+          downloadLink.download = `${data.session}.json`;
+          downloadLink.click();
+        }
+      };
+      //  save end-user drawings.
+      function save() {}
+    </script>
   </head>
   <body>
     <div id="content">
       <h1>Data Creator</h1>
+      <span id="instructions"></span>
+
+      <br />
+      <br />
+      <button id="save">save drawing</button>
+      <br />
+      <br />
+
+      <input
+        type="text"
+        name="drawing label"
+        placeholder="Identify drawing"
+        id="label"
+      />
+      <br />
       <br />
       <div id="sketchPadContainer"></div>
     </div>
-    <script defer>
-      const sketchPadContainer = document.querySelector("#sketchPadContainer");
-
-      const sketchPad = new SketchPad(sketchPadContainer);
-    </script>
   </body>
 </html>
