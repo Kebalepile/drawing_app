@@ -1,3 +1,6 @@
+/**
+ * @description Enable end-user to draw on the canvas & record such drawings
+ */
 export const draw = {};
 draw.path = (ctx, path, color = "black") => {
   ctx.strokeStyle = color;

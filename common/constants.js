@@ -5,7 +5,9 @@ export const constants = (() => {
   const JSON_DIR = `${DATASET_DIR}/json`;
   const IMG_DIR = `${DATASET_DIR}/img`;
   const SAMPLES = `${DATASET_DIR}/samples.json`;
+  const FEATURES = `${DATASET_DIR}/features.json`;
   const JS_OBJECTS = "../common/js_objects";
+  const FEATURES_JS = `${JS_OBJECTS}/features.js`
 
   const SAMPLES_JS = JS_OBJECTS + "/samples.js";
 
@@ -16,8 +18,9 @@ export const constants = (() => {
     JSON_DIR,
     IMG_DIR,
     SAMPLES,
+    FEATURES,
     JS_OBJECTS,
     SAMPLES_JS,
+    FEATURES_JS
   };
 })();
-
