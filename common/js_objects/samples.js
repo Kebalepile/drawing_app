@@ -1,4 +1,4 @@
-const samples = [
+export const samples = [
   { id: 1, label: "car", student_name: "Radu", sessionId: 1663053145814 },
   { id: 2, label: "fish", student_name: "Radu", sessionId: 1663053145814 },
   { id: 3, label: "house", student_name: "Radu", sessionId: 1663053145814 },

@@ -1,8 +1,8 @@
 import { draw } from "../common/draw.js";
 import { createCanvas } from "canvas";
 import fs from "fs";
-import { printPorgress } from "./utils.js";
-import constants from "../common/constants.js"
+import { printPorgress } from "../common/utils.js";
+import constants from "../common/constants.js";
 const canvas = createCanvas(400, 400);
 const ctx = canvas.getContext("2d");
 
@@ -52,10 +52,12 @@ fs.writeFileSync(constants.SAMPLES, JSON.stringify(samples), (err) => {
     console.log(err.message);
   }
 });
-fs.writeFileSync(constants.SAMPLES_JS, `const samples=${JSON.stringify(samples)};`, (err) => {
-  if (err) {
-    console.log(err.message);
+fs.writeFileSync(
+  constants.SAMPLES_JS,
+  `export const samples=${JSON.stringify(samples)};`,
+  (err) => {
+    if (err) {
+      console.log(err.message);
+    }
   }
-});
-
-
+);

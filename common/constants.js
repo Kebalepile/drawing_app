@@ -1,4 +1,4 @@
-const constants = (() => {
+export const constants = (() => {
   const DATA_DIR = "../data";
   const RAW_DIR = `${DATA_DIR}/raw`;
   const DATASET_DIR = `${DATA_DIR}/dataset`;
@@ -20,4 +20,4 @@ const constants = (() => {
     SAMPLES_JS,
   };
 })();
-export default constants;
+
