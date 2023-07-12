@@ -1,5 +1,4 @@
 import { constants } from "../../common/constants.js";
-import { printPorgress } from "../../common/utils.js";
 export function createRow(container, studentName, samples) {
 
 
