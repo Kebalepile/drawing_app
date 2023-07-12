@@ -13,7 +13,7 @@ export function groupBy(objArray, key) {
   const groups = {};
   for (let obj of objArray) {
     const val = obj[key];
-    
+
     if (groups[val] == null) {
       groups[val] = [];
     }
@@ -21,3 +21,14 @@ export function groupBy(objArray, key) {
   }
   return groups;
 }
+
+export const styles = {
+  car: "gray",
+  fish: "red",
+  house: "yellow",
+  tree: "green",
+  bicycle: "cyan",
+  guitar: "blue",
+  pencil: "magenta",
+  clock: "lightgray",
+};
