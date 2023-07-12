@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>viewer</title>
+    <link rel="stylesheet" href="./styles.css" />
+    <script defer type="module">
+      import { samples } from "../common/js_objects/samples.js";
+      import { constants } from "../common/constants.js";
+      import { groupBy } from "../common/utils.js";
+      import { createRow } from "./components/display.js";
+      const container = document.querySelector("#container")
+      const studentId = "sessionId";
+      const groups = groupBy(samples, studentId);
+      //   console.log(groups)
+      for (let student_id in groups) {
+        const samples = groups[student_id];
+        const studentName = samples[0].student_name;
+        createRow(container, studentName, samples);
+      }
+    </script>
+  </head>
+  <body>
+    <h1>Data Viewer</h1>
+    <div id="container"></div>
+  </body>
+</html>
