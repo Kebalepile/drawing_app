@@ -18,9 +18,9 @@ export function createRow(container, studentName, samples) {
     sampleContainer.appendChild(sampleLabel);
     sampleContainer.classList.add("sampleContainer");
     sampleContainer.setAttribute("id", `sample_${id}`);
-    sampleContainer.onclick = e => {
+    sampleContainer.onclick = (e) => {
       handleClick(sample, false);
-    }
+    };
 
     const img = document.createElement("img");
     img.classList.add("thumb");
@@ -34,26 +34,36 @@ export function createRow(container, studentName, samples) {
 }
 
 export function handleClick(sample, doScroll = true) {
- if(sample == null){
-  [...document.querySelectorAll(".emphasize")]
-  .forEach(e => e.classList.remove('emphasize'));
-  return 
- }
+  if (sample == null) {
+    [...document.querySelectorAll(".emphasize")].forEach((e) =>
+      e.classList.remove("emphasize")
+    );
+    return;
+  }
 
   const el = document.querySelector(`#sample_${sample.id}`);
- if(el.classList.contains("emphasize")){
-  el.classList.remove("emphasize");
-  window.chart.selectSample(null);
-  return;
- }
- [...document.querySelectorAll(".emphasize")]
- .forEach(e => e.classList.remove('emphasize'));
+  if (el.classList.contains("emphasize")) {
+    el.classList.remove("emphasize");
+    window.chart.selectSample(null);
+    return;
+  }
+  [...document.querySelectorAll(".emphasize")].forEach((e) =>
+    e.classList.remove("emphasize")
+  );
   el.classList.add("emphasize");
-  if(doScroll){
+  if (doScroll) {
     el.scrollIntoView({
       behaviour: "auto",
       block: "center",
     });
   }
-  window.chart.selectSample(sample)
+  window.chart.selectSample(sample);
+}
+
+export function toggleInput(inputContainer) {
+  if (inputContainer.style.display == "none") {
+    inputContainer.style.display = "block";
+  } else {
+    inputContainer.style.display = "none";
+  }
 }

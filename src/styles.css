@@ -61,15 +61,22 @@ td {
 thead {
   font-weight: bold;
 }
-#container{
-  width:calc(100% - 500px);
+#container {
+  width: calc(100% - 500px);
 }
 #chartContainer {
   position: fixed;
   right: 0;
   top: 50%;
   transform: translate(0, -50%);
-  
+}
+#inputContainer {
+  position: fixed;
+  right: 500px;
+  top: 50%;
+  transform: translate(0, -50%);
+  text-align: center;
+  margin: 10px;
 }
 
 .emphasize {
@@ -79,3 +86,14 @@ thead {
 .blur {
   filter: blur(5px);
 }
+ #controlPanel{
+  position: fixed;
+  right: 50%;
+  top: 30px;
+  transform: translate(50%,-50%);
+  width:500px;
+  padding:10px;
+  text-align: center;
+  z-index: 5;
+ 
+ }
