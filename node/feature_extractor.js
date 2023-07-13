@@ -1,5 +1,5 @@
 import { constants } from "../common/constants.js";
-import { getPathCount, getPointCount } from "../common/featuresFunctions.js";
+import { getPathCount, getPointCount , inUse} from "../common/featuresFunctions.js";
 import { printPorgress } from "../common/utils.js";
 import fs from "fs";
 
@@ -12,7 +12,10 @@ for (let sample of samples) {
   const paths = JSON.parse(
     fs.readFileSync(`${constants.JSON_DIR}/${sample.id}.json`)
   );
-  sample.point = [getPathCount(paths), getPointCount(paths)];
+  const functions = inUse.map(f => f.function);
+  sample.point = functions.map(f => f(paths));
+  // code below does same work as the inUse functions.
+  // sample.point = [getPathCount(paths), getPointCount(paths)];
 }
 
 const featureNames = ["Path Count", "Point Count"];
