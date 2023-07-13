@@ -63,7 +63,9 @@ export function handleClick(sample, doScroll = true) {
 export function toggleInput(inputContainer) {
   if (inputContainer.style.display == "none") {
     inputContainer.style.display = "block";
+    window.sketchPad.triggerUpdate();
   } else {
     inputContainer.style.display = "none";
+    window.chart.hideDynamicPoint();
   }
 }

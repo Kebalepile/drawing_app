@@ -54,10 +54,10 @@
 
       function onDrawingUpdate (paths)  {
         const point = [getPathCount(paths), getPointCount(paths)];
-        console.log(point);
+        window.chart.showDynamicPoint(point);
       };
 
-      const sketchPad = new SketchPad(inputContainer, onDrawingUpdate);
+      window.sketchPad = new SketchPad(inputContainer, onDrawingUpdate);
 
       sketchPad.canvas.style.cssText +=
         "outline:10000px solid rgba(0,0,0,0.7);";

@@ -1,5 +1,5 @@
 import { draw } from "../../common/draw.js";
-export function SketchPad(container,onUpdate = null, size = 310) {
+export function SketchPad(container, onUpdate = null, size = 310) {
   this.canvas = document.createElement("canvas");
   this.canvas.width = size;
   this.canvas.height = size;
@@ -75,7 +75,13 @@ SketchPad.prototype.redraw = function () {
     this.undoBtn.disabled = true;
   }
 
-  if(this.onUpdate){
+  if (this.onUpdate) {
+    this.onUpdate(this.paths);
+  }
+};
+
+SketchPad.prototype.triggerUpdate = function () {
+  if (this.onUpdate) {
     this.onUpdate(this.paths);
   }
 };
