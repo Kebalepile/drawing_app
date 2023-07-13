@@ -1,5 +1,6 @@
 import math from "./math.js";
 import graphics from "./graphics.js";
+
 export default class Chart {
   constructor(container, samples, options, onClick = null) {
     this.samples = samples;

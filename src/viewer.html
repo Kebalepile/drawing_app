@@ -5,15 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>viewer</title>
     <link rel="stylesheet" href="./styles.css" />
-    <!-- <script src="https://www.gstatic.com/charts/loader.js"></script> -->
     <script defer type="module">
       import { features } from "../common/js_objects/features.js";
       import { constants } from "../common/constants.js";
       import { groupBy, styles } from "../common/utils.js";
-      import { createRow } from "./components/display.js";
+      import { createRow, handleClick } from "./components/display.js";
       import Chart from "./components/chart/chart.js";
-      // import graphics from "./components/chart/graphics.js";
-      // import math from "./components/chart/math.js";
+      import graphics from "./components/chart/graphics.js";
 
       const container = document.querySelector("#container");
       const chartContainer = document.querySelector("#chartContainer");
@@ -23,22 +21,28 @@
 
       const groups = groupBy(samples, studentId);
       //   console.log(groups)
-      // for (let student_id in groups) {
-      //   const samples = groups[student_id];
-      //   const studentName = samples[0].student_name;
-      //   createRow(container, studentName, samples);
-      // }
+      for (let student_id in groups) {
+        const samples = groups[student_id];
+        const studentName = samples[0].student_name;
+        createRow(container, studentName, samples);
+      }
 
       // other chart options
       const options = {
-        size:400,
+        size:500,
         axesLabels:featureNames,
-        styles
+        styles,
+        transparency:0.7,
+        icon:"image"
       }
-      const chart = new Chart(
+
+      graphics.generateImages(styles);
+
+      window.chart = new Chart(
         chartContainer,
         samples,
-        options
+        options,
+        handleClick
       )
     
     </script>
