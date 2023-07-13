@@ -18,15 +18,15 @@ export function createRow(container, studentName, samples) {
     sampleContainer.appendChild(sampleLabel);
     sampleContainer.classList.add("sampleContainer");
     sampleContainer.setAttribute("id", `sample_${id}`);
-    sampleContainer.onclick = (e) => {
-      handleClick(sample, false);
-    };
+    // sampleContainer.onclick = (e) => {
+    //   handleClick(sample, false);
+    // };
 
     const img = document.createElement("img");
     img.classList.add("thumb");
     img.setAttribute("src", `${constants.IMG_DIR}/${id}.png`);
     img.setAttribute("alt", label);
-    img.setAttribute("loading", "lazy");
+    // img.setAttribute("loading", "lazy");
 
     sampleContainer.appendChild(img);
     row.appendChild(sampleContainer);

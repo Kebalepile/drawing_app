@@ -8,9 +8,18 @@
     <script defer type="module">
       import { SketchPad } from "./components/sketchPad.js";
       import { features } from "../common/js_objects/features.js";
-      import { getPathCount, getPointCount } from "../common/featuresFunctions.js";
+      import {
+        getPathCount,
+        getPointCount,
+        inUse,
+      } from "../common/featuresFunctions.js";
       import { constants } from "../common/constants.js";
-      import { groupBy, styles } from "../common/utils.js";
+      import {
+        groupBy,
+        styles,
+        distance,
+        getNearest,
+      } from "../common/utils.js";
       import {
         createRow,
         handleClick,
@@ -22,6 +31,7 @@
       const container = document.querySelector("#container");
       const chartContainer = document.querySelector("#chartContainer");
       const inputContainer = document.querySelector("#inputContainer");
+      const predictedLabelContainer = document.querySelector("#predictedLabelContainer");
       const toggleButton = document.querySelector("#toggleInput");
 
       const { samples, featureNames } = features;
@@ -29,11 +39,11 @@
 
       const groups = groupBy(samples, studentId);
       //   console.log(groups)
-      for (let student_id in groups) {
-        const samples = groups[student_id];
-        const studentName = samples[0].student_name;
-        createRow(container, studentName, samples);
-      }
+      // for (let student_id in groups) {
+      //   const samples = groups[student_id];
+      //   const studentName = samples[0].student_name;
+      //   createRow(container, studentName, samples);
+      // }
 
       // other chart options
       const options = {
@@ -46,16 +56,27 @@
 
       graphics.generateImages(styles);
 
-      window.chart = new Chart(chartContainer, samples, options, handleClick);
+      // window.chart = new Chart(chartContainer, samples, options, handleClick);
+      window.chart = new Chart(chartContainer, samples, options);
 
       toggleButton.onclick = () => {
         toggleInput(inputContainer);
       };
 
-      function onDrawingUpdate (paths)  {
-        const point = [getPathCount(paths), getPointCount(paths)];
+      function onDrawingUpdate(paths) {
+        const functions = inUse.map((f) => f.function);
+        const point = functions.map((f) => f(paths));
+        // console.log(point)
+        const label = classify(point);
+        predictedLabelContainer.textContent = `Is it a ${label} ?`;
         window.chart.showDynamicPoint(point);
-      };
+      }
+      function classify(point) {
+        const samplePoints = samples.map((s) => s.point);
+        const index = getNearest(point, samplePoints);
+        const nearestSample = samples[index];
+        return nearestSample.label;
+      }
 
       window.sketchPad = new SketchPad(inputContainer, onDrawingUpdate);
 
@@ -68,7 +89,9 @@
     <div id="controlPanel">
       <button id="toggleInput">Toggle Input</button>
     </div>
-    <div id="inputContainer"></div>
+    <div id="inputContainer">
+      <div id="predictedLabelContainer"></div>
+    </div>
     <div id="chartContainer"></div>
     <div id="container"></div>
   </body>

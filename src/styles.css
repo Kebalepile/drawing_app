@@ -86,14 +86,18 @@ thead {
 .blur {
   filter: blur(5px);
 }
- #controlPanel{
+#controlPanel {
   position: fixed;
   right: 50%;
   top: 30px;
-  transform: translate(50%,-50%);
-  width:500px;
-  padding:10px;
+  transform: translate(50%, -50%);
+  width: 500px;
+  padding: 10px;
   text-align: center;
   z-index: 5;
- 
- }
+}
+#predictedLabelContainer {
+  position: relative;
+  color: white;
+  font-size: 30px;
+}
