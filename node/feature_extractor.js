@@ -1,5 +1,5 @@
 import { constants } from "../common/constants.js";
-import { getPathCount, getPointCount } from "../common/features.js";
+import { getPathCount, getPointCount } from "../common/featuresFunctions.js";
 import { printPorgress } from "../common/utils.js";
 import fs from "fs";
 
