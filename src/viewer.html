@@ -31,7 +31,9 @@
       const container = document.querySelector("#container");
       const chartContainer = document.querySelector("#chartContainer");
       const inputContainer = document.querySelector("#inputContainer");
-      const predictedLabelContainer = document.querySelector("#predictedLabelContainer");
+      const predictedLabelContainer = document.querySelector(
+        "#predictedLabelContainer"
+      );
       const toggleButton = document.querySelector("#toggleInput");
 
       const { samples, featureNames } = features;
@@ -66,16 +68,21 @@
       function onDrawingUpdate(paths) {
         const functions = inUse.map((f) => f.function);
         const point = functions.map((f) => f(paths));
-        // console.log(point)
-        const label = classify(point);
+        
+        const { label, nearestSample } = classify(point);
+       
         predictedLabelContainer.textContent = `Is it a ${label} ?`;
-        window.chart.showDynamicPoint(point);
+        window.chart.showDynamicPoint(
+          point,
+          label,
+          nearestSample
+        );
       }
       function classify(point) {
         const samplePoints = samples.map((s) => s.point);
         const index = getNearest(point, samplePoints);
         const nearestSample = samples[index];
-        return nearestSample.label;
+        return { label: nearestSample.label, nearestSample };
       }
 
       window.sketchPad = new SketchPad(inputContainer, onDrawingUpdate);
